@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auth Test</title>
+</head>
+<body>
+    <h1>Authentication Test</h1>
+    <button onclick="testAuth()">Test Authentication</button>
+    <button onclick="testWebSocket()">Test WebSocket</button>
+    <div id="output"></div>
+
+    <script>
+        function log(message) {
+            document.getElementById('output').innerHTML += '<br>' + message;
+            console.log(message);
+        }
+
+        async function testAuth() {
+            try {
+                log('Testing authentication...');
+                
+                // Test the backend endpoint
+                const response = await fetch('https://ai-ide-5.onrender.com/auth/google', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        googleId: 'test123',
+                        email: 'test@example.com'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log('✅ Auth successful: ' + JSON.stringify(data));
+                    
+                    // Store in localStorage like the real app
+                    localStorage.setItem('auth_user', JSON.stringify({
+                        sessionId: data.sessionId,
+                        terminalToken: data.terminalToken,
+                        userId: data.userId,
+                        workspacePath: data.workspacePath
+                    }));
+                    
+                    log('✅ Stored in localStorage');
+                } else {
+                    log('❌ Auth failed: ' + response.status + ' ' + response.statusText);
+                }
+            } catch (error) {
+                log('❌ Error: ' + error.message);
+            }
+        }
+
+        function testWebSocket() {
+            try {
+                log('Testing WebSocket connection...');
+                
+                const authUser = localStorage.getItem('auth_user');
+                if (!authUser) {
+                    log('❌ No auth data found. Run test auth first.');
+                    return;
+                }
+                
+                const user = JSON.parse(authUser);
+                log('📋 Auth data: ' + JSON.stringify(user));
+                
+                const ws = new WebSocket('wss://ai-ide-5.onrender.com');
+                
+                ws.onopen = () => {
+                    log('✅ WebSocket connected');
+                    
+                    // Send init message
+                    const initMsg = {
+                        type: 'init',
+                        sessionId: user.sessionId,
+                        terminalToken: user.terminalToken,
+                        userId: user.userId
+                    };
+                    
+                    log('📤 Sending init: ' + JSON.stringify(initMsg));
+                    ws.send(JSON.stringify(initMsg));
+                };
+                
+                ws.onmessage = (event) => {
+                    log('📨 Received: ' + event.data);
+                };
+                
+                ws.onerror = (error) => {
+                    log('❌ WebSocket error: ' + error);
+                };
+                
+                ws.onclose = (event) => {
+                    log('🔌 WebSocket closed: ' + event.code + ' ' + event.reason);
+                };
+                
+            } catch (error) {
+                log('❌ Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+

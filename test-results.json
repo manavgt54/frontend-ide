@@ -1,0 +1,477 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\user\\Downloads\\IDE\\IDE\\frontend\\playwright.config.ts",
+    "rootDir": "C:/Users/user/Downloads/IDE/IDE/frontend/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "C:\\Users\\user\\Downloads\\IDE\\IDE\\frontend\\tests\\global-setup.js",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ],
+      [
+        "line",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "C:/Users/user/Downloads/IDE/IDE/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chrome",
+        "name": "chrome",
+        "testDir": "C:/Users/user/Downloads/IDE/IDE/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 1200000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.55.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:5173",
+      "reuseExistingServer": true,
+      "timeout": 60000,
+      "ignoreHTTPSErrors": true
+    }
+  },
+  "suites": [
+    {
+      "title": "api-edge-cases.spec.ts",
+      "file": "api-edge-cases.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Backend API Edge Cases",
+          "file": "api-edge-cases.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "test all backend endpoints with proper parameters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 23525,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n🏥 Testing Health Endpoint:\n"
+                        },
+                        {
+                          "text": "🧪 Testing GET https://ai-ide-5.onrender.com/health\n"
+                        },
+                        {
+                          "text": "   ✅ 200 OK\n"
+                        },
+                        {
+                          "text": "   📄 Response: {\n  \"status\": \"healthy\",\n  \"timestamp\": \"2025-09-09T05:14:11.615Z\",\n  \"sessions\": 0,\n  \"pty\": \"none\"\n}\n"
+                        },
+                        {
+                          "text": "\n🔐 Testing Auth Endpoints:\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/auth/google\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/auth/google\n"
+                        },
+                        {
+                          "text": "   ✅ 200 OK\n"
+                        },
+                        {
+                          "text": "   📄 Response: {\n  \"ok\": true,\n  \"userId\": 4,\n  \"sessionId\": \"perm_4_1757044230447\"\n}\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/auth/google\n"
+                        },
+                        {
+                          "text": "   ✅ 200 OK\n"
+                        },
+                        {
+                          "text": "   📄 Response: {\n  \"ok\": true,\n  \"userId\": 5,\n  \"sessionId\": \"perm_5_1757046280453\"\n}\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/auth/session/validate\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/auth/session/validate\n"
+                        },
+                        {
+                          "text": "   ✅ 404 Not Found\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/auth/session/validate\n"
+                        },
+                        {
+                          "text": "   ✅ 200 OK\n"
+                        },
+                        {
+                          "text": "   📄 Response: {\n  \"ok\": true,\n  \"sessionId\": \"perm_4_1757044230447\",\n  \"userId\": 4\n}\n"
+                        },
+                        {
+                          "text": "\n📁 Testing File Endpoints:\n"
+                        },
+                        {
+                          "text": "🧪 Testing GET https://ai-ide-5.onrender.com/files\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing GET https://ai-ide-5.onrender.com/files?sessionId=test-session-123\n"
+                        },
+                        {
+                          "text": "   ✅ 200 OK\n"
+                        },
+                        {
+                          "text": "   📄 Response: {\n  \"files\": []\n}\n"
+                        },
+                        {
+                          "text": "🧪 Testing GET https://ai-ide-5.onrender.com/files\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/open\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/open\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/open\n"
+                        },
+                        {
+                          "text": "   ✅ 404 Not Found\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   ✅ 500 Internal Server Error\n"
+                        },
+                        {
+                          "text": "🧪 Testing DELETE https://ai-ide-5.onrender.com/files/delete\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing DELETE https://ai-ide-5.onrender.com/files/delete\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing DELETE https://ai-ide-5.onrender.com/files/delete\n"
+                        },
+                        {
+                          "text": "   ✅ 200 OK\n"
+                        },
+                        {
+                          "text": "   📄 Response: {\n  \"ok\": true\n}\n"
+                        },
+                        {
+                          "text": "\n💻 Testing Terminal/WebSocket Endpoints:\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/terminal\n"
+                        },
+                        {
+                          "text": "   ✅ 404 Not Found\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/terminal\n"
+                        },
+                        {
+                          "text": "   ✅ 404 Not Found\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/terminal\n"
+                        },
+                        {
+                          "text": "   ✅ 404 Not Found\n"
+                        },
+                        {
+                          "text": "\n🔍 Testing Edge Cases:\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/auth/google\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   ✅ 500 Internal Server Error\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   ✅ 500 Internal Server Error\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   ✅ 400 Bad Request\n"
+                        },
+                        {
+                          "text": "🧪 Testing POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   ✅ 500 Internal Server Error\n"
+                        },
+                        {
+                          "text": "\n📊 COMPREHENSIVE API TEST RESULTS:\n"
+                        },
+                        {
+                          "text": "   Total API calls: 27\n"
+                        },
+                        {
+                          "text": "   Successful calls: 6\n"
+                        },
+                        {
+                          "text": "   Failed calls (4xx/5xx): 21\n"
+                        },
+                        {
+                          "text": "   Error calls: 0\n"
+                        },
+                        {
+                          "text": "\n❌ Failed API Calls:\n"
+                        },
+                        {
+                          "text": "   - 400 POST https://ai-ide-5.onrender.com/auth/google\n"
+                        },
+                        {
+                          "text": "   - 400 POST https://ai-ide-5.onrender.com/auth/session/validate\n"
+                        },
+                        {
+                          "text": "   - 404 POST https://ai-ide-5.onrender.com/auth/session/validate\n"
+                        },
+                        {
+                          "text": "   - 400 GET https://ai-ide-5.onrender.com/files\n"
+                        },
+                        {
+                          "text": "   - 400 GET https://ai-ide-5.onrender.com/files\n"
+                        },
+                        {
+                          "text": "   - 400 POST https://ai-ide-5.onrender.com/files/open\n"
+                        },
+                        {
+                          "text": "   - 400 POST https://ai-ide-5.onrender.com/files/open\n"
+                        },
+                        {
+                          "text": "   - 404 POST https://ai-ide-5.onrender.com/files/open\n"
+                        },
+                        {
+                          "text": "   - 400 POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   - 400 POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   - 500 POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   - 400 DELETE https://ai-ide-5.onrender.com/files/delete\n"
+                        },
+                        {
+                          "text": "   - 400 DELETE https://ai-ide-5.onrender.com/files/delete\n"
+                        },
+                        {
+                          "text": "   - 404 POST https://ai-ide-5.onrender.com/terminal\n"
+                        },
+                        {
+                          "text": "   - 404 POST https://ai-ide-5.onrender.com/terminal\n"
+                        },
+                        {
+                          "text": "   - 404 POST https://ai-ide-5.onrender.com/terminal\n"
+                        },
+                        {
+                          "text": "   - 400 POST https://ai-ide-5.onrender.com/auth/google\n"
+                        },
+                        {
+                          "text": "   - 500 POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   - 500 POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   - 400 POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "   - 500 POST https://ai-ide-5.onrender.com/files/save\n"
+                        },
+                        {
+                          "text": "\n🔍 EDGE CASES IDENTIFIED:\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/auth/google: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/auth/session/validate: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/auth/session/validate: 404 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - GET https://ai-ide-5.onrender.com/files: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - GET https://ai-ide-5.onrender.com/files: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/open: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/open: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/open: 404 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/save: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/save: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/save: 500 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - DELETE https://ai-ide-5.onrender.com/files/delete: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - DELETE https://ai-ide-5.onrender.com/files/delete: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/terminal: 404 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/terminal: 404 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/terminal: 404 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/auth/google: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/save: 500 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/save: 500 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/save: 400 - Edge case detected\n"
+                        },
+                        {
+                          "text": "   - POST https://ai-ide-5.onrender.com/files/save: 500 - Edge case detected\n"
+                        },
+                        {
+                          "text": "✅ Comprehensive backend API edge case testing completed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-09T05:14:02.741Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bcedc10a850ff37fac2c-175e9d721d61aa920a43",
+              "file": "api-edge-cases.spec.ts",
+              "line": 5,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-09-09T05:13:22.003Z",
+    "duration": 68781.391,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

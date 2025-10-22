@@ -1,0 +1,921 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	/* Dark theme (default) */
+	--bg: #0d0d0d;
+	--panel: #1e1e1e;
+	--gutter: #2d2d2d;
+	--text: #ffffff;
+	--muted: #9ca3af;
+	--accent: #007acc;
+	--accent-alt: #005a9e;
+	--error: #f87171;
+	--warning: #fbbf24;
+	--success: #10b981;
+	--terminal-bg: #0d0d0d;
+	--terminal-fg: #ffffff;
+	--tab-active: #1e1e1e;
+	--tab-inactive: #2d2d2d;
+	--tab-border: #3d3d3d;
+}
+
+[data-theme="light"] {
+	/* Light theme */
+	--bg: #ffffff;
+	--panel: #f3f4f6;
+	--gutter: #e5e7eb;
+	--text: #111827;
+	--muted: #6b7280;
+	--accent: #007acc;
+	--accent-alt: #005a9e;
+	--error: #dc2626;
+	--warning: #d97706;
+	--success: #059669;
+	--terminal-bg: #f3f4f6;
+	--terminal-fg: #111827;
+	--tab-active: #ffffff;
+	--tab-inactive: #f3f4f6;
+	--tab-border: #d1d5db;
+}
+
+#root, body, html {
+	height: 100%;
+	background-color: var(--bg);
+	color: var(--text);
+	font-family: "Segoe UI", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.app-shell {
+	display: grid;
+	grid-template-rows: 32px 1fr 22px;
+	height: 100vh;
+	overflow: hidden;
+}
+
+/* VS Code-style panels */
+.titlebar { 
+	background: var(--panel); 
+	border-bottom: 1px solid var(--gutter); 
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 12px;
+}
+
+/* Titlebar buttons */
+.titlebar-button {
+	background: transparent;
+	color: var(--muted);
+	border: none;
+	padding: 4px 8px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.1s ease;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 12px;
+}
+
+.titlebar-button:hover {
+	background: var(--gutter);
+	color: var(--text);
+}
+
+.titlebar-button.active {
+	background: var(--accent);
+	color: white;
+}
+
+.titlebar-button.primary {
+	background: var(--accent);
+	color: white;
+}
+
+.titlebar-button.primary:hover {
+	background: var(--accent-alt);
+}
+
+.titlebar-divider {
+	width: 1px;
+	height: 16px;
+	background: var(--gutter);
+	margin: 0 8px;
+}
+
+.sidebar-icons { 
+	background: var(--panel); 
+	border-right: 1px solid var(--gutter);
+	width: 48px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 8px;
+}
+
+.left-panel { 
+	background: var(--panel); 
+	border-right: 1px solid var(--gutter);
+	overflow: hidden;
+}
+
+.center-editor { 
+	background: var(--bg);
+	display: flex;
+	flex-direction: column;
+}
+
+.right-panel { 
+	background: var(--panel); 
+	border-left: 1px solid var(--gutter);
+	overflow: hidden;
+}
+
+.statusbar { 
+	background: var(--panel); 
+	border-top: 1px solid var(--gutter); 
+	height: 22px;
+	display: flex;
+	align-items: center;
+	padding: 0 12px;
+	font-size: 12px;
+	color: var(--muted);
+}
+
+/* Main layout container - prevent expansion */
+.flex-1.flex {
+	min-width: 0;
+	max-width: 100%;
+	overflow: hidden;
+}
+
+/* Center editor area - prevent expansion */
+.center-editor {
+	min-width: 0;
+	max-width: 100%;
+	overflow: hidden;
+}
+
+/* Editor tabs container - prevent expansion */
+.editor-tabs-container {
+	min-width: 0;
+	max-width: 100%;
+	overflow: hidden;
+}
+
+/* VS Code-style tabs */
+.tab-bar { 
+	height: 35px; 
+	background: var(--tab-inactive); 
+	border-bottom: 1px solid var(--gutter);
+	display: flex;
+	align-items: flex-end;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	padding: 0 8px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--gutter) transparent;
+	max-width: 100%;
+	width: 100%;
+	flex-shrink: 0;
+	min-width: 0;
+}
+
+.tab-bar::-webkit-scrollbar { 
+	height: 6px; 
+}
+
+.tab-bar::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.tab-bar::-webkit-scrollbar-thumb {
+	background: var(--gutter);
+	border-radius: 3px;
+}
+
+.tab-bar::-webkit-scrollbar-thumb:hover {
+	background: var(--muted);
+}
+
+.tab {
+	height: 32px;
+	padding: 0 16px;
+	background: var(--tab-inactive);
+	border-right: 1px solid var(--tab-border);
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	user-select: none;
+	transition: all 0.1s ease;
+	max-width: 200px;
+	min-width: 100px;
+	width: auto;
+	flex-shrink: 0;
+	position: relative;
+}
+
+.tab:hover {
+	background: var(--gutter);
+}
+
+.tab-active {
+	background: var(--tab-active);
+	border-bottom: 2px solid var(--accent);
+	box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.tab-close {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	opacity: 0.7;
+	transition: all 0.1s ease;
+}
+
+.tab-close:hover {
+	background: var(--gutter);
+	opacity: 1;
+}
+
+.tab-new {
+	height: 32px;
+	width: 32px;
+	background: transparent;
+	border: none;
+	color: var(--muted);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.1s ease;
+	border-radius: 4px;
+}
+
+.tab-new:hover {
+	background: var(--gutter);
+	color: var(--text);
+}
+
+/* Tab content styling */
+.tab .truncate {
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Unsaved indicator */
+.tab .text-xs {
+	font-size: 10px;
+	line-height: 1;
+}
+
+/* Tab bar action buttons */
+.tab-bar .vscode-button {
+	height: 24px;
+	padding: 2px 8px;
+	font-size: 11px;
+	margin: 4px 0;
+}
+
+.tab-bar .vscode-button.primary {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: white;
+}
+
+.tab-bar .vscode-button.primary:hover {
+	background: #005a9e;
+}
+
+/* VS Code-style sidebar icons */
+.sidebar-icon {
+	width: 48px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: var(--muted);
+	transition: all 0.1s ease;
+	border: none;
+	background: transparent;
+}
+
+.sidebar-icon:hover {
+	color: var(--text);
+	background: var(--gutter);
+}
+
+.sidebar-icon.active {
+	color: var(--text);
+	background: var(--gutter);
+}
+
+.sidebar-divider {
+	height: 1px;
+	background: var(--gutter);
+	margin: 8px 12px;
+}
+
+.sidebar-icon.logout-button {
+	color: var(--error);
+}
+
+.sidebar-icon.logout-button:hover {
+	color: var(--text);
+	background: var(--error);
+}
+
+/* VS Code-style file explorer */
+.explorer-header {
+	padding: 8px 12px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	color: var(--muted);
+	border-bottom: 1px solid var(--gutter);
+	background: var(--panel);
+}
+
+/* Search bar styling */
+.search-bar {
+	padding: 8px 12px;
+	border-bottom: 1px solid var(--gutter);
+	background: var(--panel);
+}
+
+.search-input-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.search-icon {
+	position: absolute;
+	left: 8px;
+	color: var(--muted);
+	pointer-events: none;
+}
+
+.search-input {
+	width: 100%;
+	padding: 6px 8px 6px 28px;
+	background: var(--bg);
+	border: 1px solid var(--gutter);
+	border-radius: 4px;
+	color: var(--text);
+	font-size: 12px;
+	outline: none;
+	transition: border-color 0.1s ease;
+}
+
+.search-input:focus {
+	border-color: var(--accent);
+}
+
+.search-clear {
+	position: absolute;
+	right: 6px;
+	background: transparent;
+	border: none;
+	color: var(--muted);
+	cursor: pointer;
+	padding: 2px;
+	border-radius: 2px;
+	transition: all 0.1s ease;
+}
+
+.search-clear:hover {
+	color: var(--text);
+	background: var(--gutter);
+}
+
+/* Search Panel styling */
+.search-panel-header {
+	padding: 8px 12px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	color: var(--muted);
+	border-bottom: 1px solid var(--gutter);
+	background: var(--panel);
+}
+
+.search-panel-input {
+	padding: 12px;
+	border-bottom: 1px solid var(--gutter);
+	background: var(--panel);
+}
+
+.search-button {
+	width: 100%;
+	margin-top: 8px;
+	padding: 6px 12px;
+	background: var(--accent);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 12px;
+	transition: background-color 0.1s ease;
+}
+
+.search-button:hover:not(:disabled) {
+	background: var(--accent-alt);
+}
+
+.search-button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.search-results {
+	background: var(--panel);
+}
+
+.search-result-item {
+	padding: 8px 12px;
+	border-bottom: 1px solid var(--gutter);
+	cursor: pointer;
+	transition: background-color 0.1s ease;
+}
+
+.search-result-item:hover {
+	background: var(--gutter);
+}
+
+.search-result-header {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 4px;
+	font-size: 11px;
+}
+
+.search-result-file {
+	color: var(--text);
+	font-weight: 500;
+}
+
+.search-result-line {
+	color: var(--muted);
+}
+
+.search-result-matches {
+	color: var(--accent);
+	font-size: 10px;
+}
+
+.search-result-content {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	font-size: 12px;
+	color: var(--text);
+}
+
+.search-result-text {
+	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+	line-height: 1.4;
+}
+
+.file-tree {
+	padding: 4px 0;
+}
+
+.file-item {
+	padding: 2px 12px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	height: 22px;
+	transition: background-color 0.1s ease;
+}
+
+.file-item:hover {
+	background: var(--gutter);
+}
+
+.file-item.folder {
+	font-weight: 500;
+}
+
+.file-item.file {
+	color: var(--text);
+}
+
+.file-icon {
+	width: 16px;
+	height: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* VS Code-style terminal */
+.terminal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 8px 12px;
+	background: var(--panel);
+	border-bottom: 1px solid var(--gutter);
+	font-size: 11px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Terminal status indicators */
+.terminal-header .text-xs {
+	transition: all 0.2s ease;
+}
+
+.terminal-header .text-green-500 {
+	animation: pulse 2s infinite;
+}
+
+.terminal-header .text-blue-500 {
+	animation: pulse 1.5s infinite;
+}
+
+.terminal-header .text-yellow-500 {
+	animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.6; }
+}
+
+.terminal-content {
+	background: var(--terminal-bg);
+	color: var(--terminal-fg);
+	font-family: 'Consolas','Monaco','Courier New', monospace;
+	flex: 1;
+	overflow: hidden;
+}
+
+/* Terminal Output Styling */
+.terminal-content .font-mono {
+	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+	line-height: 1.4;
+	word-wrap: break-word;
+}
+
+.terminal-content .whitespace-pre-wrap {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+/* File Explorer Styling */
+.file-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 8px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+	border-radius: 4px;
+}
+
+.file-item:hover {
+	background-color: var(--gutter);
+}
+
+.file-item.folder {
+	font-weight: 500;
+}
+
+.file-item.file {
+	font-weight: 400;
+}
+
+.file-icon {
+	font-size: 16px;
+	width: 20px;
+	text-align: center;
+}
+
+.file-item.file:hover .file-icon {
+	transform: scale(1.1);
+	transition: transform 0.2s ease;
+}
+
+/* VS Code-style chat */
+.chat-header {
+	padding: 8px 12px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	color: var(--muted);
+	border-bottom: 1px solid var(--gutter);
+	background: var(--panel);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.chat-status {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 10px;
+}
+
+.status-dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--success);
+}
+
+/* VS Code-style resizers */
+.gutter-v { 
+	width: 4px; 
+	background: transparent;
+	cursor: col-resize; 
+	transition: background-color 0.1s ease;
+	position: relative;
+}
+
+.gutter-v:hover, .gutter-v:active { 
+	background: var(--accent);
+}
+
+.gutter-h { 
+	height: 4px; 
+	background: transparent;
+	cursor: row-resize; 
+	transition: background-color 0.1s ease;
+	position: relative;
+}
+
+.gutter-h:hover, .gutter-h:active { 
+	background: var(--accent);
+}
+
+/* VS Code-style buttons */
+.vscode-button {
+	background: var(--panel);
+	color: var(--text);
+	border: 1px solid var(--gutter);
+	padding: 4px 10px;
+	border-radius: 6px;
+	font-size: 12px;
+	cursor: pointer;
+	transition: all 0.1s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.vscode-button:hover {
+	background: var(--gutter);
+}
+
+.vscode-button.primary {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: #fff;
+}
+
+.vscode-button.primary:hover {
+	background: #005a9e;
+}
+
+/* VS Code-style input */
+.vscode-input {
+	background: var(--bg);
+	color: var(--text);
+	border: 1px solid var(--gutter);
+	padding: 6px 8px;
+	border-radius: 6px;
+	font-size: 12px;
+	outline: none;
+	transition: border-color 0.1s ease;
+}
+
+.vscode-input:focus {
+	border-color: var(--accent);
+}
+
+/* Transitions */
+.transition-fast { transition: all 0.1s ease; }
+
+/* Monaco Editor theme integration */
+.monaco-editor {
+	padding-top: 0 !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+	width: 14px;
+	height: 14px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--gutter);
+	border: 3px solid var(--bg);
+	border-radius: 7px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--muted);
+}
+
+/* Focus styles */
+*:focus {
+	outline: 1px solid var(--accent);
+	outline-offset: -1px;
+}
+
+/* Selection styles */
+::selection {
+	background: var(--accent);
+	color: white;
+}
+
+/* Improve contrast for terminal and inputs */
+.terminal-content {
+	background: var(--terminal-bg);
+	color: var(--terminal-fg);
+	font-family: 'Consolas','Monaco','Courier New', monospace;
+}
+
+.vscode-input {
+	background: var(--bg);
+	color: var(--text);
+	border: 1px solid var(--gutter);
+	padding: 6px 8px;
+	border-radius: 6px;
+}
+
+.vscode-button {
+	background: var(--panel);
+	color: var(--text);
+	border: 1px solid var(--gutter);
+	padding: 4px 10px;
+	border-radius: 6px;
+}
+
+.vscode-button.primary {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: #fff;
+}
+
+/* Ensure terminal has minimum height to avoid collapse */
+.right-panel, .left-panel { min-width: 160px; }
+.terminal-content { min-height: 140px; }
+
+/* Sidebar file items hover */
+.file-item:hover { background: rgba(255,255,255,0.05); }
+[data-theme="light"] .file-item:hover { background: rgba(0,0,0,0.05); }
+
+/* Explorer layout improvements */
+.left-panel {
+	display: flex;
+	flex-direction: column;
+	min-width: 180px;
+	overflow: hidden;
+}
+
+.explorer-header {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 6px 8px;
+	background: var(--panel);
+	border-bottom: 1px solid var(--gutter);
+}
+
+.file-tree {
+	flex: 1 1 auto;
+	overflow: auto;
+}
+
+/* Resizable gutters */
+.gutter-v {
+	width: 6px !important;
+	cursor: col-resize;
+	background: var(--gutter);
+	transition: background-color 0.1s ease;
+}
+.gutter-v:hover { background: rgba(255,255,255,0.15); }
+[data-theme="light"] .gutter-v:hover { background: rgba(0,0,0,0.15); }
+
+.gutter-h {
+	height: 6px !important;
+	cursor: row-resize;
+	background: var(--gutter);
+	transition: background-color 0.1s ease;
+}
+.gutter-h:hover { background: rgba(255,255,255,0.15); }
+[data-theme="light"] .gutter-h:hover { background: rgba(0,0,0,0.15); }
+
+/* Tabs should never wrap; allow scroll if many */
+
+/* AI Chat Panel specific styles */
+.ai-chat-panel {
+	background: var(--panel);
+	border-left: 1px solid var(--gutter);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+/* Session tabs styling */
+.session-tabs {
+	display: flex;
+	overflow-x: auto;
+	padding: 8px;
+	gap: 4px;
+	border-bottom: 1px solid var(--gutter);
+	background: var(--panel);
+}
+
+.session-tab {
+	padding: 6px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.1s ease;
+	white-space: nowrap;
+	font-size: 12px;
+}
+
+.session-tab.active {
+	background: var(--accent);
+	color: white;
+}
+
+.session-tab:not(.active) {
+	background: var(--gutter);
+	color: var(--text);
+}
+
+.session-tab:not(.active):hover {
+	background: var(--muted);
+}
+
+/* Improved panel transitions */
+.left-panel, .right-panel {
+	transition: width 0.2s ease;
+}
+
+/* Better focus indicators */
+.titlebar-button:focus,
+.sidebar-icon:focus,
+.vscode-button:focus {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+/* Enhanced hover effects */
+.sidebar-icon:hover {
+	transform: scale(1.05);
+}
+
+.titlebar-button:hover {
+	transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.explorer-header {
+		padding: 4px 6px;
+	}
+	
+	.titlebar {
+		padding: 0 8px;
+	}
+	
+	.titlebar-button {
+		padding: 2px 6px;
+		font-size: 11px;
+	}
+}
