@@ -1,0 +1,103 @@
+# Dockerfile for Adaptive System Backend
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies and Node.js for Gemini CLI
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libffi-dev \
+    libssl-dev \
+    tesseract-ocr \
+    curl \
+    tree \
+    nano \
+    less \
+    vim \
+    git \
+    wget \
+    unzip \
+    rsync \
+    jq \
+    xvfb \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Docker
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null \
+    && apt-get update \
+    && apt-get install -y docker-ce docker-ce-cli containerd.io \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js 20 for Gemini CLI
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
+# Install node-gyp to avoid conflicts
+RUN npm install -g node-gyp
+
+# Install Gemini CLI globally with specific version
+RUN npm install -g @google/gemini-cli@latest --legacy-peer-deps
+
+# Install Chrome and ChromeDriver for Selenium testing
+RUN apt-get update && apt-get install -y gnupg ca-certificates \
+    && mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /etc/apt/keyrings/google-linux-signing-key.gpg \
+    && echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/google-linux-signing-key.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ChromeDriver with fixed version for stability
+RUN wget -O /tmp/chromedriver.zip "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.109/linux64/chromedriver-linux64.zip" \
+    && unzip /tmp/chromedriver.zip -d /tmp/ \
+    && mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/ \
+    && chmod +x /usr/local/bin/chromedriver \
+    && rm -rf /tmp/chromedriver.zip /tmp/chromedriver-linux64
+
+# Copy requirements first for better caching
+COPY adaptive_system_backend/requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY adaptive_system_backend/ .
+
+# Make test script executable
+RUN chmod +x test_selenium.py
+
+# Create necessary directories
+RUN mkdir -p /tmp/adaptive_system_logs /tmp/adaptive_system_output /tmp/adaptive_system_backups /tmp/adaptive_system_uploads
+
+# Expose port
+EXPOSE 5000
+
+# Set environment variables
+ENV FLASK_APP=src/main.py
+ENV FLASK_ENV=production
+ENV PYTHONPATH=/app
+
+# Selenium environment variables for headless mode
+ENV DISPLAY=:99
+ENV CHROME_BIN=/usr/bin/google-chrome
+ENV CHROME_DRIVER_PATH=/usr/local/bin/chromedriver
+
+# Verify Chrome and ChromeDriver installation
+RUN google-chrome --version && chromedriver --version
+
+# Verify Docker installation
+RUN docker --version
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:5000/api/health || exit 1
+
+# Run the application
+CMD ["python", "src/main.py"]
+

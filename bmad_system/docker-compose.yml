@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  adaptive-system-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: adaptive-system-backend
+    ports:
+      - "5006:5000"
+    environment:
+      - FLASK_ENV=production
+      - GEMINI_API_KEY=AIzaSyCuZp7hqVV9oOS8smkA8y0bfP8bdwZ0I_Y
+    volumes:
+      - adaptive_system_data:/tmp/adaptive_system_output
+      - adaptive_system_logs:/tmp/adaptive_system_logs
+      - adaptive_system_uploads:/tmp/adaptive_system_uploads
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - adaptive-system-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  adaptive-system-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: adaptive-system-frontend
+    ports:
+      - "5005:80"
+    depends_on:
+      - adaptive-system-backend
+    networks:
+      - adaptive-system-network
+    restart: unless-stopped
+
+volumes:
+  adaptive_system_data:
+    driver: local
+  adaptive_system_logs:
+    driver: local
+  adaptive_system_uploads:
+    driver: local
+
+networks:
+  adaptive-system-network:
+    driver: bridge
+
