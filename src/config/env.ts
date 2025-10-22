@@ -8,11 +8,11 @@ const isElectron = typeof window !== 'undefined' && (
 
 export const ENV_CONFIG = {
   // Backend URLs
-  BACKEND_URL: import.meta.env.VITE_BACKEND_URL || (isElectron ? 'http://localhost:5173/api' : (typeof window !== 'undefined' && window.location.origin.startsWith('http://localhost:5174') ? 'http://localhost:5174/api' : (typeof window !== 'undefined' && window.location.origin.startsWith('http://localhost:5173') ? 'http://localhost:5173/api' : 'https://ai-ide-5.onrender.com'))),
-  WS_URL: import.meta.env.VITE_WS_URL || (isElectron ? 'ws://localhost:5173' : (typeof window !== 'undefined' && window.location.origin.startsWith('http://localhost:5174') ? 'ws://localhost:5174' : (typeof window !== 'undefined' && window.location.origin.startsWith('http://localhost:5173') ? 'ws://localhost:5173' : 'wss://ai-ide-5.onrender.com'))),
+  BACKEND_URL: import.meta.env.VITE_BACKEND_URL || 'https://ai-ide-5.onrender.com',
+  WS_URL: import.meta.env.VITE_WS_URL || 'wss://ai-ide-5.onrender.com',
   
   // API Endpoints
-  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || (isElectron ? 'http://localhost:5173/api' : (typeof window !== 'undefined' && window.location.origin.startsWith('http://localhost:5174') ? 'http://localhost:5174/api' : (typeof window !== 'undefined' && window.location.origin.startsWith('http://localhost:5173') ? 'http://localhost:5173/api' : 'https://ai-ide-5.onrender.com'))),
+  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://ai-ide-5.onrender.com',
   GEMINI_API_URL: import.meta.env.VITE_GEMINI_API_URL || 'https://ai-ide-5.onrender.com',
   
   // App Configuration
