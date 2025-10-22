@@ -19,7 +19,7 @@ export const ENV_CONFIG = {
   APP_NAME: import.meta.env.VITE_APP_NAME || 'AI IDE',
   APP_VERSION: import.meta.env.VITE_APP_VERSION || '1.0.0',
   APP_ENV: import.meta.env.VITE_APP_ENV || 'production',
-  GOOGLE_CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID || '337922104533-ug7qho6tlkr8ntvumgjmmjbdgfvfkrot.apps.googleusercontent.com',
+  GOOGLE_CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID || '1083313446645-u35omicoumuavcnnn8u2duun9stipbeq.apps.googleusercontent.com',
   
   // Terminal Configuration
   TERMINAL_ROWS: parseInt(import.meta.env.VITE_TERMINAL_ROWS || '20'),
