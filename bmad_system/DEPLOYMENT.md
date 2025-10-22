@@ -119,7 +119,7 @@ services:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     volumes:
       - adaptive_system_data:/tmp/adaptive_system_output
-      - adaptive_system_logs:/tmp/bmad_logs
+      - adaptive_system_logs:/tmp/adaptive_system_logs
     networks:
       - adaptive-system-network
 

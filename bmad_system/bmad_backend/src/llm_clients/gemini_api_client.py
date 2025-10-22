@@ -1,5 +1,5 @@
 """
-Gemini API Client Module for BMAD System
+Gemini API Client Module for Adaptive System
 
 This module provides direct integration with the Gemini API for advanced functionalities.
 It handles the bring-your-own-keys feature, allowing users to integrate their own Gemini keys.

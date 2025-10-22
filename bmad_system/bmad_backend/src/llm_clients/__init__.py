@@ -1,2 +1,2 @@
-# LLM clients for BMAD system
+# LLM clients for Adaptive System
 

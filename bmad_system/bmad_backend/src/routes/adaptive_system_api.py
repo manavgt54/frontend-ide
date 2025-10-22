@@ -1007,6 +1007,7 @@ def delete_custom_agent(agent_id):
 def copy_custom_agent(agent_id):
 	"""Copy a custom agent"""
 	try:
+		_ensure_workflows_schema()
 		data = request.get_json()
 		
 		if not data or 'name' not in data:
@@ -1377,8 +1378,10 @@ def upload_file_for_task(task_id):
 			return jsonify({'error': 'No file provided'}), 400
 		
 		file = request.files['file']
+		
 		if file.filename == '':
 			return jsonify({'error': 'No file selected'}), 400
+		
 		if not allowed_file(file.filename):
 			return jsonify({'error': 'File type not allowed'}), 400
 		

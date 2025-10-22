@@ -1,2 +1,2 @@
-# Core orchestration logic for BMAD system
+# Core orchestration logic for Adaptive System
 

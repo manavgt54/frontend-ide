@@ -102,10 +102,10 @@ class ProjectExecutor:
         }
         
         # Parse Adaptive System Master output for project overview
-        if 'bmad' in agent_outputs:
-            bmad_output = agent_outputs['bmad']
-            project_spec['description'] = self._extract_description(bmad_output)
-            project_spec['name'] = self._extract_project_name(bmad_output)
+        if 'orchestrator' in agent_outputs:
+            orchestrator_output = agent_outputs['orchestrator']
+            project_spec['description'] = self._extract_description(orchestrator_output)
+            project_spec['name'] = self._extract_project_name(orchestrator_output)
         
         # Parse Analyst output for requirements
         if 'analyst' in agent_outputs:
@@ -356,7 +356,7 @@ class ProjectExecutor:
         """Create actual project files"""
         generated_files = []
         import tempfile
-        project_dir = os.path.join(tempfile.gettempdir(), "bmad_projects", task_id)
+        project_dir = os.path.join(tempfile.gettempdir(), "adaptive_system_projects", task_id)
         os.makedirs(project_dir, exist_ok=True)
         
         # Create README.md

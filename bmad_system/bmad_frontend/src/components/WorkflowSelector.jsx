@@ -53,7 +53,7 @@ function WorkflowSelector({ onWorkflowSelect, selectedWorkflow, agents }) {
       const count = defaultWf ? normalizeSeq(defaultWf.agent_sequence).length : 9;
       return {
         name: 'Default Workflow',
-        description: 'Standard BMAD workflow with all agents',
+        description: 'Standard Adaptive System workflow with all agents',
         agentCount: count
       };
     }

@@ -1,5 +1,5 @@
 """
-Context Manager Module for BMAD System
+Context Manager Module for Adaptive System
 
 This module is responsible for managing the global context for each task.
 This includes reading .PRD.md and .tasks.md before each LLM call, updating

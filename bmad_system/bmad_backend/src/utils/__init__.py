@@ -1,2 +1,2 @@
-# Utility functions for BMAD system
+# Utility functions for Adaptive System
 

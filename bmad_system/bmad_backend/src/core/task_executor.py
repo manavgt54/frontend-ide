@@ -1,5 +1,5 @@
 """
-Task Executor Module for BMAD System
+Task Executor Module for Adaptive System
 
 This module handles the execution of actual tasks based on agent outputs.
 It creates working files (not just .md files) that subsequent agents can use.

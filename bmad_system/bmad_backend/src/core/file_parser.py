@@ -1,5 +1,5 @@
 """
-File Parser Module for BMAD System
+File Parser Module for Adaptive System
 
 This module handles the parsing of various file types (TXT, MD, JSON, CSV, DOCX, PDF, 
 XLSX, PPTX, PNG, JPG, JPEG, GIF, WEBP, MP4, WEBM) for text extraction. It integrates 

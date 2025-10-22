@@ -1,5 +1,5 @@
 """
-Model Switcher Module for BMAD System
+Model Switcher Module for Adaptive System
 
 This module implements logic to switch between different Gemini models based on 
 task criticality or if one model fails to respond. It also manages input and 

@@ -1,2 +1,2 @@
-# MCP handlers for BMAD system
+# MCP handlers for Adaptive System
 

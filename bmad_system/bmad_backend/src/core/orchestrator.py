@@ -1,7 +1,7 @@
 """
-Orchestrator Module for BMAD System
+Orchestrator Module for Adaptive System
 
-This module implements the BMAD methodology (Break down, Make a plan, Act, Debug).
+This module implements the Adaptive System methodology (Break down, Make a plan, Act, Debug).
 It determines the sequence of agents to invoke based on the workflow, injects context,
 and handles agent handoffs. It also manages credit and token metering logic.
 """
@@ -46,7 +46,7 @@ class Workflow:
     keywords: List[str]
 
 class Orchestrator:
-    """Main orchestrator for the BMAD system"""
+    """Main orchestrator for the Adaptive System"""
     
     def __init__(self):
         self.task_manager = TaskManager()
@@ -195,7 +195,7 @@ class Orchestrator:
     
     async def execute_task(self, task_id: str) -> bool:
         """
-        Execute a task using the BMAD methodology
+        Execute a task using the Adaptive System methodology
         
         Args:
             task_id: The task ID to execute
